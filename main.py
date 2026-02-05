@@ -1,34 +1,50 @@
 from vulnerabilities import vulnerabilities
-
-def process_vulnerabilities(vulns):
-    prioritized = [
-    v for v in vulns
-    if v["cvss"] >= 5.0
-]
-
-
-    # for vuln in vulns:
-    #     if vuln["exploitable"] and vuln["cvss"] >= 7.0:
-    #         prioritized.append(vuln)
-
-    return prioritized
-def summarize_by_severity(vulns):
-    summary = {}
-
-    for vuln in vulns:
-        severity = vuln["severity"]
-        summary[severity] = summary.get(severity, 0) + 1
-
-    return summary
+from src.processor import prioritize_vulnerabilities
+from src.reporter import summarize_by_severity, print_summary
 
 
 def main():
-    prioritized = process_vulnerabilities(vulnerabilities)
-    summary = summarize_by_severity(prioritized)
+    #prioritized = prioritize_vulnerabilities(vulnerabilities)
+    prioritized = prioritize_vulnerabilities(vulnerabilities, min_cvss=8.0)
 
-    print("Summary:")
-    for severity, count in summary.items():
-        print(f"{severity}: {count}")
+    summary = summarize_by_severity(prioritized)
+    print_summary(summary)
+
+
+if __name__ == "__main__":
+    main()
+
+# from vulnerabilities import vulnerabilities
+
+# def process_vulnerabilities(vulns):
+#     prioritized = [
+#     v for v in vulns
+#     if v["cvss"] >= 5.0
+# ]
+
+
+#     # for vuln in vulns:
+#     #     if vuln["exploitable"] and vuln["cvss"] >= 7.0:
+#     #         prioritized.append(vuln)
+
+#     return prioritized
+# def summarize_by_severity(vulns):
+#     summary = {}
+
+#     for vuln in vulns:
+#         severity = vuln["severity"]
+#         summary[severity] = summary.get(severity, 0) + 1
+
+#     return summary
+
+
+# def main():
+#     prioritized = process_vulnerabilities(vulnerabilities)
+#     summary = summarize_by_severity(prioritized)
+
+#     print("Summary:")
+#     for severity, count in summary.items():
+#         print(f"{severity}: {count}")
 
 # def main():
 #     critical_assets = process_vulnerabilities(vulnerabilities)
@@ -42,5 +58,6 @@ def main():
 #     # for asset in critical_assets:
 #     #     print(f"- {asset}")
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#   main()
+#
