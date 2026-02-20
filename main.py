@@ -1,18 +1,57 @@
-from vulnerabilities import vulnerabilities
+from src.logger import setup_logger
 from src.processor import prioritize_vulnerabilities
-from src.reporter import summarize_by_severity, print_summary
+from src.reporter import print_summary, summarize_by_severity
+from vulnerabilities import vulnerabilities
+
+logger = setup_logger("main")
 
 
 def main():
-    #prioritized = prioritize_vulnerabilities(vulnerabilities)
-    prioritized = prioritize_vulnerabilities(vulnerabilities, min_cvss=8.0)
+    logger.info("Starting vulnerability processing")
 
+    prioritized = prioritize_vulnerabilities(vulnerabilities)
     summary = summarize_by_severity(prioritized)
     print_summary(summary)
+
+    logger.info("Vulnerability processing completed")
 
 
 if __name__ == "__main__":
     main()
+
+# from vulnerabilities import vulnerabilities
+# from src.processor import prioritize_vulnerabilities
+# from src.reporter import summarize_by_severity, print_summary
+# from src.exceptions import VulnerabilityProcessingError
+
+# def main():
+#     try:
+#         prioritized = prioritize_vulnerabilities(vulnerabilities)
+#         summary = summarize_by_severity(prioritized)
+#         print_summary(summary)
+
+#     except VulnerabilityProcessingError as e:
+#         print(f"[ERROR] Vulnerability processing failed: {e}")
+
+
+# if __name__ == "__main__":
+#     main()
+
+# from vulnerabilities import vulnerabilities
+# from src.processor import prioritize_vulnerabilities
+# from src.reporter import summarize_by_severity, print_summary
+
+
+# def main():
+#     #prioritized = prioritize_vulnerabilities(vulnerabilities)
+#     prioritized = prioritize_vulnerabilities(vulnerabilities, min_cvss=8.0)
+
+#     summary = summarize_by_severity(prioritized)
+#     print_summary(summary)
+
+
+# if __name__ == "__main__":
+#     main()
 
 # from vulnerabilities import vulnerabilities
 
@@ -53,11 +92,12 @@ if __name__ == "__main__":
 #     #     print(f"- {asset}")
 #     print("Summary:")
 #     for asset in critical_assets:
-#         print(f"{asset.get("severity")} - {list(asset.values()).count(asset.get("severity"))}")  
+#         print(f"{asset.get("severity")} -
+#         {list(asset.values()).count(asset.get("severity"))}")
 #     # print("Critical assets affected:")
 #     # for asset in critical_assets:
 #     #     print(f"- {asset}")
 
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #   main()
 #

@@ -25,22 +25,17 @@ def prioritize_vulnerabilities(vulns, min_cvss=7.0):
             exploitable = bool(vuln.get("exploitable", False))
         except (TypeError, ValueError):
             logger.warning(
-                "Skipping malformed vulnerability %s",
-                vuln.get("id", "UNKNOWN")
+                "Skipping malformed vulnerability %s", vuln.get("id", "UNKNOWN")
             )
             continue
 
         if exploitable and cvss >= min_cvss:
             prioritized.append(vuln)
             logger.info(
-                "Prioritized vulnerability %s (CVSS %.1f)",
-                vuln.get("id"),
-                cvss
+                "Prioritized vulnerability %s (CVSS %.1f)", vuln.get("id"), cvss
             )
 
     return prioritized
-
-
 
 
 # from src.exceptions import InvalidVulnerabilityData
